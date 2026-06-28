@@ -1,0 +1,26 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "CB7RYgotDknc_aPXNtx0k"
+uri = "file://artifacts/zenith-labs/public/projects/dashboard.png"
+type = "image"
+title = "Dashboard AI Interface"
+
+[[generated]]
+id = "1Klv2vNunjdz2eAzjFYhO"
+uri = "file://artifacts/zenith-labs/public/projects/reaper.png"
+type = "image"
+title = "Automation Bot Terminal"
+
+[[generated]]
+id = "JZnw4694xXd8ePaHfkhqg"
+uri = "file://artifacts/zenith-labs/public/projects/cipher.png"
+type = "image"
+title = "Glassmorphism UI System"
+
+[[generated]]
+id = "tH0qDx1S_SJhXyN8N1LJu"
+uri = "file://artifacts/zenith-labs/public/projects/nexus.png"
+type = "image"
+title = "Code Editor Interface"
