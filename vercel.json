@@ -1,0 +1,18 @@
+{
+  "buildCommand": "cd artifacts/zenith-labs && pnpm run build:vercel",
+  "outputDirectory": "artifacts/zenith-labs/dist",
+  "framework": null,
+  "rewrites": [
+    { "source": "/darkside", "destination": "/index.html" },
+    { "source": "/about-richard", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/audio/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}
