@@ -1,40 +1,61 @@
-export function Skills() {
-  const skills = [
-    { title: "Problem Solver", icon: "⚡" },
-    { title: "Full Stack Development", icon: "🔥" },
-    { title: "Modern UI Design", icon: "✨" },
-    { title: "Backend Development", icon: "💻" },
-    { title: "API Integration", icon: "🔗" },
-    { title: "Database Design", icon: "🗄️" },
-    { title: "Responsive Design", icon: "📱" },
-    { title: "AI Assisted Dev", icon: "🤖" }
-  ];
+import { motion } from "framer-motion";
+import { Zap, Layers, Palette, Server, Link2, Database, Smartphone, Brain } from "lucide-react";
 
+const skills = [
+  { icon: Zap, title: "Problem Solver", desc: "Finding solutions where others see obstacles" },
+  { icon: Layers, title: "Full Stack", desc: "React, Node, Express, Next.js, Vite" },
+  { icon: Palette, title: "UI Design", desc: "Figma, Tailwind, glassmorphism, motion" },
+  { icon: Server, title: "Backend", desc: "REST APIs, GraphQL, microservices" },
+  { icon: Link2, title: "API Integration", desc: "Stripe, OpenAI, WhatsApp, Telegram" },
+  { icon: Database, title: "Database", desc: "PostgreSQL, MongoDB, Drizzle ORM" },
+  { icon: Smartphone, title: "Responsive", desc: "Mobile-first, PWA, adaptive design" },
+  { icon: Brain, title: "AI Dev", desc: "GPT-4, Claude, LangChain, AI workflows" },
+];
+
+export default function Skills() {
   return (
-    <section id="skills" className="py-24 relative bg-black/30">
-      <div className="container mx-auto px-6 max-w-6xl">
-        <div className="text-center mb-16 scroll-reveal opacity-0 translate-y-10 transition-all duration-1000">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-[0.2em] text-white mb-2 glow-text">
-            ᬼ⃟ SKILLS & EXPERTISE ᬼ⃟
-          </h2>
-          <div className="w-24 h-1 bg-primary mx-auto mt-6 glow-box" />
+    <section id="skills" className="py-32 bg-gray-50">
+      <div className="max-w-[1200px] mx-auto px-6">
+        <div className="text-center mb-20">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="vercel-section-title text-black mb-4"
+          >
+            Skills & Expertise
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-gray-500 max-w-lg mx-auto"
+          >
+            Weapons of a developer who refuses to settle for average.
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {skills.map((skill, i) => (
-            <div 
-              key={i} 
-              className="glass-card p-6 flex flex-col items-center justify-center text-center gap-4 hover:border-primary transition-all duration-300 group scroll-reveal opacity-0 scale-95"
-              style={{ transitionDelay: `${i * 100}ms` }}
-            >
-              <div className="text-3xl filter grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
-                {skill.icon}
-              </div>
-              <h3 className="text-sm font-mono text-gray-300 group-hover:text-white transition-colors">
-                {skill.title}
-              </h3>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {skills.map((skill, i) => {
+            const Icon = skill.icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="vercel-card p-6 group"
+              >
+                <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center mb-4 group-hover:bg-[#e63946] transition-colors duration-300">
+                  <Icon size={22} className="text-white" />
+                </div>
+                <h3 className="font-bold text-black mb-1">{skill.title}</h3>
+                <p className="text-gray-500 text-sm">{skill.desc}</p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

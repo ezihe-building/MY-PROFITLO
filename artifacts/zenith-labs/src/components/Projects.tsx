@@ -1,82 +1,101 @@
-import dashboardImg from "@assets/screenshots/empirebot001_vercel_app.png";
+import { motion } from "framer-motion";
+import { ExternalLink, Github } from "lucide-react";
 
-export function Projects() {
-  const projects = [
-    {
-      title: "ZENITH DASHBOARD",
-      description: "A real-time analytics dashboard with AI insights providing deep data intelligence.",
-      tech: "React, Node.js, PostgreSQL, AI",
-      img: "/projects/dashboard.png"
-    },
-    {
-      title: "REAPER BOT",
-      description: "Advanced WhatsApp automation bot with 50+ features for premium users.",
-      tech: "Node.js, WhatsApp Web API, MongoDB",
-      img: "/projects/reaper.png"
-    },
-    {
-      title: "CIPHER UI",
-      description: "Next-gen glassmorphism design system for premium web applications.",
-      tech: "React, Tailwind, Framer Motion",
-      img: "/projects/cipher.png"
-    },
-    {
-      title: "NEXUS PORTFOLIO",
-      description: "The template engine behind this cinematic portfolio experience.",
-      tech: "React, Vite, TypeScript",
-      img: "/projects/nexus.png"
-    }
-  ];
+const projects = [
+  {
+    title: "ZENITH DASHBOARD",
+    description: "A real-time analytics dashboard with AI insights providing deep data intelligence for teams.",
+    tech: ["React", "Node.js", "PostgreSQL", "AI"],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+  },
+  {
+    title: "REAPER BOT",
+    description: "Advanced WhatsApp automation bot with 50+ features for premium users and businesses.",
+    tech: ["Node.js", "WhatsApp API", "MongoDB"],
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
+  },
+  {
+    title: "CIPHER UI",
+    description: "Next-gen design system with glassmorphism, animations, and premium component library.",
+    tech: ["React", "Tailwind", "Framer Motion"],
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop",
+  },
+  {
+    title: "NEXUS PORTFOLIO",
+    description: "The template engine behind this cinematic portfolio experience. Reusable, customizable.",
+    tech: ["React", "Vite", "TypeScript"],
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop",
+  },
+];
 
+export default function Projects() {
   return (
-    <section id="projects" className="py-24 relative">
-      <div className="container mx-auto px-6 max-w-7xl">
-        <div className="text-center mb-16 scroll-reveal opacity-0 translate-y-10 transition-all duration-1000">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-[0.2em] text-white mb-2 glow-text">
-            𒋲 PROJECTS 𒋲
-          </h2>
-          <div className="w-24 h-1 bg-primary mx-auto mt-6 glow-box" />
+    <section id="projects" className="py-32 bg-white">
+      <div className="max-w-[1200px] mx-auto px-6">
+        <div className="text-center mb-20">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="vercel-section-title text-black mb-4"
+          >
+            Projects
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-gray-500 max-w-lg mx-auto"
+          >
+            Real work. Real impact. Every project is forged with the same determination.
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projects.map((project, i) => (
-            <div 
-              key={i} 
-              className="glass-card group overflow-hidden border border-white/10 hover:border-primary/50 transition-all duration-500 scroll-reveal opacity-0 translate-y-10"
-              style={{ transitionDelay: `${i * 200}ms` }}
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="vercel-card overflow-hidden group"
             >
-              <div className="relative h-64 overflow-hidden border-b border-white/10 group-hover:border-primary/30 transition-colors">
-                <img 
-                  src={project.img} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 transform group-hover:scale-105"
+              <div className="relative h-56 overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-white tracking-widest mb-3 group-hover:text-primary transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-                  {project.description}
-                </p>
-                
-                <div className="mb-8">
-                  <span className="text-xs text-primary font-mono tracking-widest block mb-2">TECH STACK</span>
-                  <p className="text-gray-300 text-sm font-mono">{project.tech}</p>
+
+              <div className="p-6">
+                <h3 className="text-lg font-bold text-black mb-2">{project.title}</h3>
+                <p className="text-gray-500 text-sm mb-4 leading-relaxed">{project.description}</p>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tech.map((t, j) => (
+                    <span key={j} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-md">
+                      {t}
+                    </span>
+                  ))}
                 </div>
-                
-                <div className="flex gap-4">
-                  <a href="#" className="px-6 py-2 bg-primary/10 border border-primary text-primary text-sm font-mono tracking-widest hover:bg-primary hover:text-white transition-colors">
-                    DEMO
-                  </a>
-                  <a href="#" className="px-6 py-2 border border-white/20 text-gray-300 text-sm font-mono tracking-widest hover:border-white transition-colors">
-                    GITHUB
-                  </a>
+
+                <div className="flex gap-3">
+                  <button className="flex items-center gap-2 px-4 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-[#e63946] transition-colors">
+                    <ExternalLink size={14} />
+                    Demo
+                  </button>
+                  <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-700 text-sm font-medium rounded-full hover:border-[#e63946] hover:text-[#e63946] transition-colors bg-white">
+                    <Github size={14} />
+                    GitHub
+                  </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

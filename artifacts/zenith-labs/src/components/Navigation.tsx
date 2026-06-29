@@ -1,121 +1,111 @@
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
-import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
-const NAV_LINKS = [
-  { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Projects", href: "#projects" },
-  { name: "Skills", href: "#skills" },
-  { name: "Contact", href: "#contact" },
+const navLinks = [
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Projects", href: "#projects" },
+  { label: "Skills", href: "#skills" },
+  { label: "Contact", href: "#contact" },
 ];
 
-export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
+export default function Navigation() {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-
-      // Simple active section detection
-      const sections = NAV_LINKS.map(l => l.href.substring(1));
-      let current = "";
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el && window.scrollY >= el.offsetTop - 200) {
-          current = section;
-        }
-      }
-      setActiveSection(current);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setMobileMenuOpen(false);
+  const scrollTo = (href: string) => {
+    setMobileOpen(false);
     const el = document.querySelector(href);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          isScrolled ? "bg-black/80 backdrop-blur-md border-b border-primary/20 py-4" : "bg-transparent py-6"
+      <motion.nav
+        initial={{ y: -80 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm"
+            : "bg-transparent"
         }`}
       >
-        <div className="container mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
           <a
-            href="#hero"
-            onClick={(e) => scrollTo(e, "#hero")}
-            className="text-white font-bold text-xl md:text-2xl tracking-widest glow-text flex items-center gap-2"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="flex items-center gap-2 group"
           >
-            <span className="text-primary text-sm md:text-lg">𖤍</span>
-            ZENITH LABS
+            <div className="w-7 h-7 rounded-full border-2 border-[#e63946] flex items-center justify-center">
+              <div className="w-3 h-3 rounded-full bg-[#e63946] sharingan-spin opacity-80" />
+            </div>
+            <span className="text-sm font-semibold tracking-tight text-black">
+              ZENITH LABS
+            </span>
           </a>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => scrollTo(e, link.href)}
-                className={`text-sm tracking-widest font-mono transition-colors duration-300 ${
-                  activeSection === link.href.substring(1)
-                    ? "text-primary glow-text"
-                    : "text-gray-400 hover:text-white"
-                }`}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <button
+                key={link.href}
+                onClick={() => scrollTo(link.href)}
+                className="text-sm text-gray-500 hover:text-black transition-colors duration-200 font-medium"
               >
-                {link.name}
-              </a>
+                {link.label}
+              </button>
             ))}
+            <button
+              onClick={() => scrollTo("#contact")}
+              className="px-4 py-1.5 text-sm font-medium bg-black text-white rounded-full hover:bg-[#e63946] transition-colors duration-200"
+            >
+              Hire Me
+            </button>
           </div>
 
-          {/* Mobile Toggle */}
           <button
-            className="md:hidden text-gray-400 hover:text-white"
-            onClick={() => setMobileMenuOpen(true)}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden p-2 text-gray-600 hover:text-black"
           >
-            <Menu size={28} />
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-      </nav>
+      </motion.nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "tween", duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg flex flex-col items-center justify-center"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="fixed inset-0 z-40 bg-white pt-20 px-6 md:hidden"
           >
-            <button
-              className="absolute top-6 right-6 text-gray-400 hover:text-primary transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <X size={32} />
-            </button>
-            <div className="flex flex-col items-center space-y-8">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => scrollTo(e, link.href)}
-                  className="text-2xl tracking-[0.2em] font-mono text-gray-300 hover:text-primary transition-colors hover:glow-text"
+            <div className="flex flex-col gap-6">
+              {navLinks.map((link) => (
+                <button
+                  key={link.href}
+                  onClick={() => scrollTo(link.href)}
+                  className="text-lg font-medium text-gray-800 hover:text-[#e63946] transition-colors text-left"
                 >
-                  {link.name}
-                </a>
+                  {link.label}
+                </button>
               ))}
+              <button
+                onClick={() => scrollTo("#contact")}
+                className="mt-4 w-full py-3 text-sm font-medium bg-black text-white rounded-full hover:bg-[#e63946] transition-colors"
+              >
+                Hire Me
+              </button>
             </div>
           </motion.div>
         )}
