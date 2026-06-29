@@ -1,105 +1,109 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+const LINES = [
+  "> Some people write code...",
+  "> I build digital experiences.",
+  "> Welcome to the world of...",
+];
+
 export default function IntroScreen({ onComplete }: { onComplete: () => void }) {
-  const [visible, setVisible] = useState(true);
-  const [step, setStep] = useState(0);
-  const [musicStarted, setMusicStarted] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  const [lineIndex, setLineIndex] = useState(0);
+  const [showTitle, setShowTitle] = useState(false);
+  const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
-    const hasSeenIntro = localStorage.getItem("zenith-intro-seen");
-    if (hasSeenIntro) {
-      setVisible(false);
-      return;
-    }
-
-    const timers = [
-      setTimeout(() => setStep(1), 1800),
-      setTimeout(() => setStep(2), 3600),
-      setTimeout(() => setStep(3), 5000),
-      setTimeout(() => setStep(4), 6200),
-    ];
-    return () => timers.forEach(clearTimeout);
+    const t1 = setTimeout(() => setLineIndex(1), 1800);
+    const t2 = setTimeout(() => setLineIndex(2), 3600);
+    const t3 = setTimeout(() => setShowTitle(true), 5000);
+    const t4 = setTimeout(() => setShowButton(true), 6200);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+    };
   }, []);
 
   const handleEnter = () => {
-    if (musicStarted) return;
-    setMusicStarted(true);
     onComplete();
-    setTimeout(() => {
-      localStorage.setItem("zenith-intro-seen", "true");
-      setVisible(false);
-    }, 600);
+    setDismissed(true);
   };
 
-  if (!visible) return null;
+  if (dismissed) return null;
 
   return (
     <AnimatePresence>
-      {visible && (
-        <motion.div
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black overflow-hidden"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-        >
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#e63946]/5 blur-[200px]" />
-          </div>
+      <motion.div
+        className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black"
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
+      >
+        {/* Ambient red glow */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#e63946]/5 blur-[200px]" />
+        </div>
 
-          <div className="z-10 text-center flex flex-col items-center justify-center min-h-[300px] px-6">
-            {step < 3 && (
-              <motion.p
-                key={step}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-lg md:text-2xl text-gray-500 font-mono tracking-wider"
-              >
-                {step === 0 && "> Some people write code..."}
-                {step === 1 && "> I build digital experiences."}
-                {step === 2 && "> Welcome to the world of..."}
-                <span className="typing-cursor" />
-              </motion.p>
-            )}
+        <div className="relative z-10 text-center flex flex-col items-center justify-center min-h-[300px] px-6">
+          {/* Typewriter lines */}
+          {!showTitle && (
+            <motion.div
+              key={lineIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-lg md:text-2xl text-gray-500 font-mono tracking-wider"
+            >
+              {LINES[lineIndex]}
+              <span className="typing-cursor" />
+            </motion.div>
+          )}
 
-            {step >= 3 && (
+          {/* Title reveal */}
+          <AnimatePresence>
+            {showTitle && (
               <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
+                initial={{ scale: 0.85, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 1, ease: "easeOut" }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
                 className="flex flex-col items-center"
               >
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-4 leading-none">
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white tracking-tighter mb-3 leading-none">
                   ZENITH LABS
                 </h1>
-                {step >= 4 && (
+
+                {showButton && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col items-center gap-6"
+                    transition={{ duration: 0.5 }}
+                    className="flex flex-col items-center gap-5 mt-6"
                   >
-                    <p className="text-gray-400 tracking-widest text-sm md:text-base font-medium">
-                      FOUNDER: EZIHE CHIGORZIRIM (RICHARD)
+                    <p className="text-gray-400 tracking-[0.2em] text-xs md:text-sm font-semibold uppercase">
+                      Founder: Ezihe Chigorzirim (Richard)
                     </p>
+
                     <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                      whileHover={{ scale: 1.06 }}
+                      whileTap={{ scale: 0.94 }}
                       onClick={handleEnter}
-                      disabled={musicStarted}
-                      className="mt-4 px-8 py-3 bg-white text-black font-semibold text-sm tracking-wider rounded-full hover:bg-[#e63946] hover:text-white transition-all duration-300 shadow-lg disabled:opacity-50"
+                      className="px-10 py-3.5 bg-white text-black font-bold text-sm tracking-[0.15em] uppercase rounded-full hover:bg-[#e63946] hover:text-white transition-all duration-300 shadow-lg"
                     >
-                      {musicStarted ? "ENTERING..." : "ENTER"}
+                      ENTER
                     </motion.button>
-                    <p className="text-gray-600 text-xs font-mono">
+
+                    <p className="text-gray-700 text-xs font-mono mt-1">
                       Skyfall — Adele will play
                     </p>
                   </motion.div>
                 )}
               </motion.div>
             )}
-          </div>
-        </motion.div>
-      )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
     </AnimatePresence>
   );
 }

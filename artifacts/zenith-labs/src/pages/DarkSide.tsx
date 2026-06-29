@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 import { Skull, Bug, Zap, Shield, Fingerprint, AlertTriangle, Code2, Terminal, ChevronLeft } from "lucide-react";
 
@@ -102,19 +102,19 @@ const darkFeatures = [
   },
 ];
 
-const corruptionLog = [
-  { line: "> Initializing dark mode...", delay: 0 },
-  { line: "> Bypassing security protocols...", delay: 0.5 },
-  { line: "> Accessing forbidden directories...", delay: 1 },
-  { line: "> WARNING: Unauthorized access detected", delay: 1.5 },
-  { line: "> Deploying countermeasures...", delay: 2 },
-  { line: "> COUNTERMEASURES FAILED", delay: 2.5 },
-  { line: "> Welcome to the Dark Side.", delay: 3 },
+const BOOT_LINES = [
+  "> Initializing dark mode...",
+  "> Bypassing security protocols...",
+  "> Accessing forbidden directories...",
+  "> WARNING: Unauthorized access detected",
+  "> Deploying countermeasures...",
+  "> COUNTERMEASURES FAILED",
+  "> Welcome to the Dark Side.",
 ];
 
 export default function DarkSide() {
-  const [visibleLines, setVisibleLines] = useState(0);
-  const [showEnter, setShowEnter] = useState(false);
+  const [bootLine, setBootLine] = useState(0);
+  const [showHero, setShowHero] = useState(false);
   const [entered, setEntered] = useState(false);
   const matrixAudio = useRef<HTMLAudioElement | null>(null);
 
@@ -123,16 +123,18 @@ export default function DarkSide() {
     audio.src = "/audio/matrix-ultra-slowed.mp3";
     audio.loop = true;
     matrixAudio.current = audio;
-    return () => {
-      audio.pause();
-    };
+    return () => { audio.pause(); };
   }, []);
 
   useEffect(() => {
-    corruptionLog.forEach((item, i) => {
-      setTimeout(() => setVisibleLines(i + 1), item.delay * 1000 + 500);
+    let timeouts: ReturnType<typeof setTimeout>[] = [];
+
+    BOOT_LINES.forEach((_, i) => {
+      timeouts.push(setTimeout(() => setBootLine(i + 1), i * 600 + 400));
     });
-    setTimeout(() => setShowEnter(true), 4000);
+    timeouts.push(setTimeout(() => setShowHero(true), BOOT_LINES.length * 600 + 600));
+
+    return () => timeouts.forEach(clearTimeout);
   }, []);
 
   const handleEnter = () => {
@@ -163,66 +165,85 @@ export default function DarkSide() {
         </div>
       </nav>
 
-      <div className="pt-32 pb-16 px-6 max-w-[1200px] mx-auto relative z-10">
+      <div className="pt-32 pb-16 px-6 max-w-[1200px] mx-auto relative z-10 min-h-[calc(100vh-200px)] flex flex-col items-center">
+
         {/* Boot sequence */}
-        <div className="font-mono text-sm space-y-2 mb-16">
-          {corruptionLog.slice(0, visibleLines).map((log, i) => (
+        <div className="font-mono text-sm space-y-2 mb-12 w-full max-w-lg">
+          {BOOT_LINES.slice(0, bootLine).map((line, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               className={`${
-                log.line.includes("WARNING") || log.line.includes("FAILED")
-                  ? "text-[#ff1744]"
-                  : log.line.includes("Welcome")
+                line.includes("WARNING") || line.includes("FAILED")
+                  ? "text-[#ff1744] font-semibold"
+                  : line.includes("Welcome")
                   ? "text-[#dc143c] font-bold"
                   : "text-gray-500"
               }`}
             >
-              {log.line}
+              {line}
             </motion.div>
           ))}
+          {bootLine < BOOT_LINES.length && (
+            <div className="text-gray-600">
+              <span className="typing-cursor" />
+            </div>
+          )}
         </div>
 
-        {/* ENTER Button */}
-        {showEnter && !entered && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-center mb-20"
-          >
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <Skull size={32} className="text-[#dc143c]" />
-              <AlertTriangle size={24} className="text-[#ff1744]" />
-            </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-white">
-              The{" "}
-              <span className="text-gradient-sukuna glitch-text" data-text="Dark Side">
-                Dark Side
-              </span>
-            </h1>
-            <p className="text-gray-500 text-lg max-w-xl mx-auto font-mono mb-8">
-              Every developer has one. This is where bugs are born, exploits are engineered, and systems are pushed to their breaking point.
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleEnter}
-              className="px-10 py-4 bg-[#dc143c] text-white font-bold text-sm tracking-widest rounded-full hover:bg-[#ff1744] transition-all duration-300 shadow-[0_0_40px_rgba(220,20,60,0.4)]"
+        {/* Hero + ENTER Button */}
+        <AnimatePresence>
+          {showHero && !entered && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.6 }}
+              className="text-center flex flex-col items-center"
             >
-              ENTER THE DARKNESS
-            </motion.button>
-            <p className="text-gray-600 text-xs font-mono mt-4">
-              MATRIX — Ultra Slowed will play
-            </p>
-          </motion.div>
-        )}
+              <div className="flex items-center justify-center gap-4 mb-6">
+                <Skull size={36} className="text-[#dc143c]" />
+                <AlertTriangle size={28} className="text-[#ff1744]" />
+              </div>
 
-        {/* Main Content */}
+              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-4 text-white">
+                The{" "}
+                <span className="text-gradient-sukuna glitch-text" data-text="Dark Side">
+                  Dark Side
+                </span>
+              </h1>
+
+              <p className="text-gray-500 text-lg max-w-xl mx-auto font-mono mb-10 leading-relaxed">
+                Every developer has one. This is where bugs are born, exploits are engineered, and systems are pushed to their breaking point.
+              </p>
+
+              <motion.button
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.94 }}
+                onClick={handleEnter}
+                className="px-12 py-4 bg-[#dc143c] text-white font-bold text-sm tracking-[0.2em] uppercase rounded-full hover:bg-[#ff1744] transition-all duration-300 shadow-[0_0_50px_rgba(220,20,60,0.4)]"
+              >
+                ENTER THE DARKNESS
+              </motion.button>
+
+              <p className="text-gray-700 text-xs font-mono mt-4">
+                MATRIX — Ultra Slowed will play
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Main Content (after ENTER) */}
         {entered && (
-          <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="w-full"
+          >
             {/* Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
               {darkFeatures.map((feature, i) => {
                 const Icon = feature.icon;
                 return (
@@ -230,7 +251,7 @@ export default function DarkSide() {
                     key={i}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.15 }}
+                    transition={{ delay: i * 0.1 }}
                     className="relative group p-6 bg-[#0a0a0a] border border-[#1a1a1a] rounded-xl overflow-hidden hover:border-[#dc143c] transition-all duration-500"
                   >
                     <div
@@ -254,12 +275,12 @@ export default function DarkSide() {
               })}
             </div>
 
-            {/* Quote Section */}
+            {/* Quote */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-              className="text-center mb-32 max-w-2xl mx-auto"
+              transition={{ delay: 0.6 }}
+              className="text-center mb-24 max-w-2xl mx-auto"
             >
               <div className="border-l-2 border-[#dc143c] pl-6">
                 <p className="text-2xl md:text-3xl font-bold text-white mb-4 italic">
@@ -271,12 +292,12 @@ export default function DarkSide() {
               </div>
             </motion.div>
 
-            {/* Stats / Damage Report */}
+            {/* Stats */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.2 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-32"
+              transition={{ delay: 0.8 }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-24"
             >
               {[
                 { label: "Bugs Created", value: "∞", sub: "and counting" },
@@ -288,7 +309,7 @@ export default function DarkSide() {
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.4 + i * 0.1 }}
+                  transition={{ delay: 1 + i * 0.1 }}
                   className="text-center p-6 bg-[#0a0a0a] border border-[#1a1a1a] rounded-xl"
                 >
                   <div className="text-3xl md:text-4xl font-bold text-[#dc143c] mb-1">{stat.value}</div>
@@ -298,21 +319,21 @@ export default function DarkSide() {
               ))}
             </motion.div>
 
-            {/* Return button */}
+            {/* Return */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 2 }}
-              className="text-center pb-20"
+              transition={{ delay: 1.2 }}
+              className="text-center pb-16"
             >
               <Link href="/">
-                <span className="inline-flex items-center gap-2 px-8 py-3 bg-[#dc143c] text-white font-semibold rounded-full hover:bg-[#ff1744] transition-colors cursor-none">
+                <span className="inline-flex items-center gap-2 px-8 py-3 border border-[#dc143c] text-[#dc143c] font-semibold rounded-full hover:bg-[#dc143c] hover:text-white transition-all duration-300 cursor-none">
                   <ChevronLeft size={18} />
                   Return to the Light
                 </span>
               </Link>
             </motion.div>
-          </>
+          </motion.div>
         )}
       </div>
 
