@@ -229,4 +229,9 @@
     font-size: 14px;
     color: rgba(230, 57, 70, 0.3);
   }
+
+  .hero-photo-tilt {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
 }
