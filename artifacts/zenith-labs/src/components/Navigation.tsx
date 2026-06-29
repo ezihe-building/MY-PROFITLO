@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 const navLinks = [
@@ -29,6 +29,8 @@ export default function Navigation() {
   };
 
   const isDarkSide = location === "/darkside";
+  const isAboutRichard = location === "/about-richard";
+  const isMainPage = !isDarkSide && !isAboutRichard;
 
   return (
     <>
@@ -53,7 +55,7 @@ export default function Navigation() {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {!isDarkSide && navLinks.map((link) => (
+            {isMainPage && navLinks.map((link) => (
               <button
                 key={link.href}
                 onClick={() => scrollTo(link.href)}
@@ -62,12 +64,18 @@ export default function Navigation() {
                 {link.label}
               </button>
             ))}
+            <Link href="/about-richard">
+              <span className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-[#e63946] transition-colors duration-200 font-medium cursor-none">
+                <User size={14} />
+                Richard
+              </span>
+            </Link>
             <Link href="/darkside">
               <span className="text-sm text-gray-400 hover:text-[#e63946] transition-colors duration-200 font-medium cursor-none">
                 Dark Side
               </span>
             </Link>
-            {!isDarkSide && (
+            {isMainPage && (
               <button
                 onClick={() => scrollTo("#contact")}
                 className="px-4 py-1.5 text-sm font-medium bg-white text-black rounded-full hover:bg-[#e63946] hover:text-white transition-colors duration-200"
@@ -95,7 +103,7 @@ export default function Navigation() {
             className="fixed inset-0 z-40 bg-black pt-20 px-6 md:hidden"
           >
             <div className="flex flex-col gap-6">
-              {!isDarkSide && navLinks.map((link) => (
+              {isMainPage && navLinks.map((link) => (
                 <button
                   key={link.href}
                   onClick={() => scrollTo(link.href)}
@@ -104,12 +112,18 @@ export default function Navigation() {
                   {link.label}
                 </button>
               ))}
+              <Link href="/about-richard">
+                <span className="flex items-center gap-2 text-lg font-medium text-gray-300 hover:text-[#e63946] transition-colors">
+                  <User size={18} />
+                  About Richard
+                </span>
+              </Link>
               <Link href="/darkside">
                 <span className="text-lg font-medium text-gray-300 hover:text-[#e63946] transition-colors">
                   Dark Side
                 </span>
               </Link>
-              {!isDarkSide && (
+              {isMainPage && (
                 <button
                   onClick={() => scrollTo("#contact")}
                   className="mt-4 w-full py-3 text-sm font-medium bg-white text-black rounded-full hover:bg-[#e63946] hover:text-white transition-colors"

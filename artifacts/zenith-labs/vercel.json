@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/darkside", "destination": "/index.html" },
+    { "source": "/about-richard", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
