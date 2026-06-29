@@ -14,14 +14,14 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-32 bg-gray-50">
+    <section id="services" className="py-32 bg-[#0a0a0a]">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="text-center mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="vercel-section-title text-black mb-4"
+            className="amoled-section-title text-white mb-4"
           >
             Services
           </motion.h2>
@@ -46,12 +46,12 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="vercel-card p-6 group cursor-default"
+                className="amoled-card p-6 group cursor-default"
               >
-                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center mb-4 group-hover:bg-[#e63946]/10 transition-colors">
-                  <Icon size={20} className="text-gray-600 group-hover:text-[#e63946] transition-colors" />
+                <div className="w-10 h-10 rounded-lg bg-[#111] flex items-center justify-center mb-4 group-hover:bg-[#e63946]/10 transition-colors">
+                  <Icon size={20} className="text-gray-400 group-hover:text-[#e63946] transition-colors" />
                 </div>
-                <h3 className="font-semibold text-black mb-2 text-sm">{service.title}</h3>
+                <h3 className="font-semibold text-white mb-2 text-sm">{service.title}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{service.desc}</p>
               </motion.div>
             );

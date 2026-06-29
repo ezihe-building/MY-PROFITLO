@@ -14,6 +14,11 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
     return () => timers.forEach(clearTimeout);
   }, []);
 
+  const handleEnter = () => {
+    localStorage.setItem("zenith-intro-seen", "true");
+    onComplete();
+  };
+
   return (
     <AnimatePresence>
       <motion.div
@@ -22,7 +27,6 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
         exit={{ opacity: 0 }}
         transition={{ duration: 0.8, ease: "easeInOut" }}
       >
-        {/* Subtle red ambient glow */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#e63946]/5 blur-[200px]" />
         </div>
@@ -64,7 +68,7 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={onComplete}
+                    onClick={handleEnter}
                     className="mt-4 px-8 py-3 bg-white text-black font-semibold text-sm tracking-wider rounded-full hover:bg-[#e63946] hover:text-white transition-all duration-300 shadow-lg"
                   >
                     ENTER

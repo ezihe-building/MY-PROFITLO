@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -35,45 +35,50 @@
 }
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 0%;
-  --border: 0 0% 90%;
-  --input: 0 0% 90%;
-  --ring: 350 80% 52%;
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --border: 0 0% 12%;
+  --input: 0 0% 12%;
+  --ring: 0 80% 52%;
 
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 0%;
-  --card-border: 0 0% 90%;
+  --card: 0 0% 4%;
+  --card-foreground: 0 0% 100%;
+  --card-border: 0 0% 12%;
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 0%;
+  --popover: 0 0% 4%;
+  --popover-foreground: 0 0% 100%;
 
-  --primary: 350 80% 52%;
+  --primary: 0 80% 52%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 0 0% 96%;
-  --secondary-foreground: 0 0% 0%;
+  --secondary: 0 0% 8%;
+  --secondary-foreground: 0 0% 100%;
 
-  --muted: 0 0% 96%;
-  --muted-foreground: 0 0% 45%;
+  --muted: 0 0% 8%;
+  --muted-foreground: 0 0% 50%;
 
-  --accent: 350 80% 96%;
-  --accent-foreground: 350 80% 40%;
+  --accent: 0 80% 8%;
+  --accent-foreground: 0 80% 60%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
   --radius: .5rem;
 
-  --madara-red: #e63946;
-  --madara-deep: #c41e3a;
-  --madara-dark: #8b0000;
-  --vercel-black: #000000;
-  --vercel-grey: #666666;
-  --vercel-light: #888888;
-  --vercel-border: #eaeaea;
-  --vercel-bg: #fafafa;
-  --vercel-card: #ffffff;
+  --red: #e63946;
+  --red-deep: #c41e3a;
+  --red-dark: #8b0000;
+  --sukuna-red: #dc143c;
+  --sukuna-pink: #ff1744;
+  --black: #000000;
+  --gray-1: #0a0a0a;
+  --gray-2: #111111;
+  --gray-3: #1a1a1a;
+  --gray-4: #222222;
+  --gray-5: #333333;
+  --gray-6: #555555;
+  --gray-7: #888888;
+  --gray-8: #aaaaaa;
 }
 
 @layer base {
@@ -81,58 +86,67 @@
     @apply border-border;
   }
   body {
-    @apply bg-white text-black antialiased;
+    @apply bg-black text-white antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    cursor: default;
   }
   html {
     scroll-behavior: smooth;
   }
+  ::selection {
+    background: rgba(230, 57, 70, 0.3);
+    color: white;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #000;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #e63946;
+  }
 }
 
 @layer utilities {
-  .gradient-madara {
-    background: linear-gradient(135deg, #e63946, #c41e3a, #8b0000);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .gradient-bg-madara {
-    background: linear-gradient(135deg, #e63946, #c41e3a, #8b0000);
-  }
-
-  .madara-glow {
-    box-shadow: 0 0 40px rgba(230, 57, 70, 0.15), 0 0 80px rgba(230, 57, 70, 0.08);
-  }
-
-  .madara-glow-strong {
-    box-shadow: 0 0 60px rgba(230, 57, 70, 0.25), 0 0 120px rgba(230, 57, 70, 0.12);
-  }
-
-  .vercel-card {
-    background: #ffffff;
-    border: 1px solid #eaeaea;
+  .amoled-card {
+    background: #0a0a0a;
+    border: 1px solid #1a1a1a;
     border-radius: 12px;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
   }
 
-  .vercel-card:hover {
+  .amoled-card:hover {
     border-color: #e63946;
-    box-shadow: 0 4px 20px rgba(230, 57, 70, 0.1);
+    box-shadow: 0 0 30px rgba(230, 57, 70, 0.15);
   }
 
-  .vercel-hero-text {
+  .amoled-hero-text {
     font-size: clamp(3rem, 8vw, 7rem);
     font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 1.05;
   }
 
-  .vercel-section-title {
+  .amoled-section-title {
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.1;
+  }
+
+  .text-red-glow {
+    color: #e63946;
+    text-shadow: 0 0 20px rgba(230, 57, 70, 0.5), 0 0 40px rgba(230, 57, 70, 0.3);
+  }
+
+  .sukuna-glow {
+    color: #dc143c;
+    text-shadow: 0 0 30px rgba(220, 20, 60, 0.6), 0 0 60px rgba(220, 20, 60, 0.3);
   }
 
   .sharingan-spin {
@@ -147,7 +161,7 @@
   .typing-cursor::after {
     content: '|';
     animation: blink 1s step-end infinite;
-    color: var(--madara-red);
+    color: #e63946;
     margin-left: 2px;
   }
 
@@ -156,8 +170,15 @@
     50% { opacity: 0; }
   }
 
-  .text-gradient {
+  .text-gradient-red {
     background: linear-gradient(135deg, #e63946, #c41e3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-sukuna {
+    background: linear-gradient(135deg, #ff1744, #dc143c, #8b0000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -170,5 +191,42 @@
   @keyframes red-pulse {
     0%, 100% { box-shadow: 0 0 20px rgba(230, 57, 70, 0.2); }
     50% { box-shadow: 0 0 40px rgba(230, 57, 70, 0.4); }
+  }
+
+  .glitch-text {
+    position: relative;
+  }
+
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+
+  .scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #e63946, transparent);
+    animation: scan 3s linear infinite;
+    opacity: 0.3;
+  }
+
+  @keyframes scan {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100vh); }
+  }
+
+  .matrix-rain {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: rgba(230, 57, 70, 0.3);
   }
 }

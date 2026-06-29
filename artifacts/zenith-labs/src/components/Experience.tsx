@@ -11,14 +11,14 @@ const milestones = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-32 bg-white">
+    <section id="experience" className="py-32 bg-black">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="text-center mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="vercel-section-title text-black mb-4"
+            className="amoled-section-title text-white mb-4"
           >
             The Journey
           </motion.h2>
@@ -34,8 +34,7 @@ export default function Experience() {
         </div>
 
         <div className="relative">
-          {/* Desktop line */}
-          <div className="hidden md:block absolute top-[60px] left-0 right-0 h-0.5 bg-gray-200" />
+          <div className="hidden md:block absolute top-[60px] left-0 right-0 h-0.5 bg-[#1a1a1a]" />
 
           <div className="grid grid-cols-1 md:grid-cols-6 gap-8 md:gap-4">
             {milestones.map((m, i) => (
@@ -47,13 +46,10 @@ export default function Experience() {
                 transition={{ delay: i * 0.1 }}
                 className="relative flex flex-col items-center"
               >
-                {/* Node */}
-                <div className="w-3 h-3 rounded-full bg-black border-2 border-white shadow-sm z-10 md:mb-8 shrink-0" />
-
-                {/* Content */}
+                <div className="w-3 h-3 rounded-full bg-black border-2 border-[#333] shadow-sm z-10 md:mb-8 shrink-0" />
                 <div className="text-center mt-4 md:mt-0">
                   <div className="text-2xl font-bold text-[#e63946] mb-1">{m.year}</div>
-                  <div className="font-semibold text-black text-sm mb-1">{m.label}</div>
+                  <div className="font-semibold text-white text-sm mb-1">{m.label}</div>
                   <div className="text-gray-500 text-xs leading-relaxed">{m.desc}</div>
                 </div>
               </motion.div>

@@ -14,14 +14,14 @@ const skills = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-32 bg-gray-50">
+    <section id="skills" className="py-32 bg-[#0a0a0a]">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="text-center mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="vercel-section-title text-black mb-4"
+            className="amoled-section-title text-white mb-4"
           >
             Skills & Expertise
           </motion.h2>
@@ -46,12 +46,12 @@ export default function Skills() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="vercel-card p-6 group"
+                className="amoled-card p-6 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center mb-4 group-hover:bg-[#e63946] transition-colors duration-300">
-                  <Icon size={22} className="text-white" />
+                <div className="w-12 h-12 rounded-xl bg-[#111] flex items-center justify-center mb-4 group-hover:bg-[#e63946] transition-colors duration-300">
+                  <Icon size={22} className="text-gray-300 group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="font-bold text-black mb-1">{skill.title}</h3>
+                <h3 className="font-bold text-white mb-1">{skill.title}</h3>
                 <p className="text-gray-500 text-sm">{skill.desc}</p>
               </motion.div>
             );

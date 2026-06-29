@@ -30,14 +30,14 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-32 bg-white">
+    <section id="projects" className="py-32 bg-black">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="text-center mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="vercel-section-title text-black mb-4"
+            className="amoled-section-title text-white mb-4"
           >
             Projects
           </motion.h2>
@@ -60,36 +60,36 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="vercel-card overflow-hidden group"
+              className="amoled-card overflow-hidden group"
             >
               <div className="relative h-56 overflow-hidden">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               </div>
 
               <div className="p-6">
-                <h3 className="text-lg font-bold text-black mb-2">{project.title}</h3>
+                <h3 className="text-lg font-bold text-white mb-2">{project.title}</h3>
                 <p className="text-gray-500 text-sm mb-4 leading-relaxed">{project.description}</p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.map((t, j) => (
-                    <span key={j} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-md">
+                    <span key={j} className="px-2 py-1 bg-[#111] text-gray-400 text-xs font-medium rounded-md">
                       {t}
                     </span>
                   ))}
                 </div>
 
                 <div className="flex gap-3">
-                  <button className="flex items-center gap-2 px-4 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-[#e63946] transition-colors">
+                  <button className="flex items-center gap-2 px-4 py-2 bg-white text-black text-sm font-medium rounded-full hover:bg-[#e63946] hover:text-white transition-colors">
                     <ExternalLink size={14} />
                     Demo
                   </button>
-                  <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-700 text-sm font-medium rounded-full hover:border-[#e63946] hover:text-[#e63946] transition-colors bg-white">
+                  <button className="flex items-center gap-2 px-4 py-2 border border-[#333] text-gray-300 text-sm font-medium rounded-full hover:border-[#e63946] hover:text-white transition-colors bg-transparent">
                     <Github size={14} />
                     GitHub
                   </button>

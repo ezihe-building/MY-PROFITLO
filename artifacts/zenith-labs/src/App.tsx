@@ -14,19 +14,22 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingAI from "@/components/FloatingAI";
 import MusicPlayer from "@/components/MusicPlayer";
+import CodeWheel from "@/components/CodeWheel";
 import CustomCursor from "@/components/CustomCursor";
 import { KonamiOverlay } from "@/components/KonamiOverlay";
+import DarkSide from "@/pages/DarkSide";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
 
 function MainPage() {
   return (
-    <div className="min-h-screen bg-white cursor-none md:cursor-none">
+    <div className="min-h-screen bg-black cursor-none md:cursor-none">
       <CustomCursor />
       <KonamiOverlay />
       <Navigation />
       <Hero />
+      <CodeWheel />
       <About />
       <Services />
       <Projects />
@@ -62,6 +65,7 @@ function App() {
           {showIntro && <IntroScreen onComplete={handleIntroComplete} />}
           <Switch>
             <Route path="/" component={MainPage} />
+            <Route path="/darkside" component={DarkSide} />
             <Route component={NotFound} />
           </Switch>
         </WouterRouter>
