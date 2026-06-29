@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd ../zenith-labs && pnpm install && pnpm run build:vercel",
-  "outputDirectory": "../zenith-labs/dist",
+  "buildCommand": "pnpm --filter @workspace/zenith-labs run build:vercel",
+  "outputDirectory": "artifacts/zenith-labs/dist",
   "framework": null,
   "rewrites": [
     { "source": "/darkside", "destination": "/index.html" },
