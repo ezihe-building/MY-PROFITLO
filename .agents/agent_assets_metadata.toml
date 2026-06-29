@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "CB7RYgotDknc_aPXNtx0k"
@@ -24,3 +23,9 @@ id = "tH0qDx1S_SJhXyN8N1LJu"
 uri = "file://artifacts/zenith-labs/public/projects/nexus.png"
 type = "image"
 title = "Code Editor Interface"
+
+[[outputs]]
+id = "EQ-FS-7VgvbKvoDYe9jBH"
+uri = "file://zenith-labs-export.tar.gz"
+type = "unspecified"
+title = "ZENITH LABS Project Export (tar.gz)"
