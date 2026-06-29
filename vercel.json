@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd ../zenith-labs && pnpm run build:vercel",
+  "buildCommand": "cd ../zenith-labs && pnpm install && pnpm run build:vercel",
   "outputDirectory": "../zenith-labs/dist",
   "framework": null,
   "rewrites": [
